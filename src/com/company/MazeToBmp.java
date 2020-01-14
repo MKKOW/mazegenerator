@@ -14,7 +14,7 @@ public class MazeToBmp {
     public MazeToBmp(){}
     public MazeToBmp(Maze maze, String name) {
         MazeToBmp.maze = maze;
-        saveBMP(convertMaze(maze.getMaze(),maze.getLength(),maze.getWidth()),name);
+        saveBMP(convertMaze(maze.getMaze(),maze.getWidth(),maze.getLength()),name);
 
     }
 
@@ -25,11 +25,11 @@ public class MazeToBmp {
         res.setRGB(5*x+4,5*y+4,Color.BLACK.getRGB());
     }
 
-    private static void setNWall(BufferedImage res, int x, int y){
+    private static void setSWall(BufferedImage res, int x, int y){
         for (int i =0; i < 3 ;i++)
             res.setRGB((5*x)+1+i, 5*y,Color.BLACK.getRGB());
     }
-    private static void setSWall(BufferedImage res, int x, int y){
+    private static void setNWall(BufferedImage res, int x, int y){
         for (int i =0; i < 3 ;i++)
             res.setRGB((5*x)+1+i, (5*y)+4,Color.BLACK.getRGB());
     }
@@ -67,7 +67,7 @@ public class MazeToBmp {
     private static void saveBMP(final BufferedImage bi, final String path ){
         try {
             RenderedImage ri = bi;
-            ImageIO.write(ri, "bmp", new File(path));
+            ImageIO.write(ri, "bmp", new File(path+".bmp"));
 
         } catch ( IOException e) {
             e.printStackTrace();
