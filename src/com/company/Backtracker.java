@@ -104,7 +104,7 @@ public class Backtracker extends Algo {
                         maze.getMaze()[x][y].setW(false);
                         maze.getMaze()[x - 1][y].setE(false);
 
-                        y++;
+                        x--;
                         check = false;
                         break;
                     }
