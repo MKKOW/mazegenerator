@@ -2,3 +2,7 @@ $ cat .gitignore
 .idea*
 out*
 *.iml
+/out
+*.bmp
+.idea
+*.xml

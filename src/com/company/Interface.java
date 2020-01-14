@@ -92,22 +92,24 @@ public class Interface {
             System.out.println("Blad danych, podaj jeszcze raz; ");
             lvl = scan.nextInt();
         }
-
+        
+/*
         System.out.println("Podaj nazwe swojego labiryntu:  ");
         name = scan.nextLine();
 
         File tmp = new File(name);
-
-        /**Sprawdzam czy istnieje labirynt o podanej nazwie**/
+*/
+        /**Sprawdzam czy istnieje labirynt o podanej nazwie**//*
         while(tmp.exists()) {
             System.out.println("Taki labirynt juz istnieje, podaj nowa nazwe: ");
             name = scan.nextLine();
         }
-
+*/
         Backtracker BT = new Backtracker(10);
         Maze maze = new Maze(length, width, lvl, 10 /**Narazie na stale**/, "Backtracker"); /** Trzeba rozkminic jak tutaj wrzucac seed**/
 
         BT.generator(maze,0,0);
+        new MazeToBmp(maze,name);
         scan.nextLine();
         /**Dalej modul odpowiedzialny za zapis uzywajac nazwy**/
 
