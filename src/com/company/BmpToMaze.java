@@ -63,7 +63,7 @@ public class BmpToMaze {
         System.out.println("Niewłaściwy format obrazka.");
         System.out.println("Pora na magię!");
         //magia
-        Backtracker BT = new Backtracker(10);
+        Backtracker BT = new Backtracker(bi.hashCode());
         Maze magicMaze = new Maze(bi.getHeight() / 5, bi.getWidth() / 5 , 3, bi.hashCode() , "Backtracker");
         BT.generator(magicMaze, 0, 0);
         this.maze = magicMaze;
