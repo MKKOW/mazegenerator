@@ -75,7 +75,7 @@ public class Maze {
     public void visitedReset() /**Resetuje visited w kazdej komorce na false**/
     {
         for(int i = 0; i<this.width; i++)
-            for(int j = 0; j<this.width; j++)
+            for(int j = 0; j<this.length; j++)
             {
                 this.maze[i][j].setVisited(false);
             }

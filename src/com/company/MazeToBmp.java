@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import javax.imageio.ImageIO;
 // parts from http://www.java2s.com/Tutorials/Java/Graphics_How_to/Image/Create_BMP_format_image.htm
 public class MazeToBmp {
@@ -18,6 +19,11 @@ public class MazeToBmp {
 
     }
 
+
+    private static void setDotAtCenter(BufferedImage res,int x, int y){
+        if (maze.getMaze()[x][y].isVisited())
+        res.setRGB((5*x)+2 , (5*y)+2,Color.RED.getRGB());
+    }
     private static void setBlackCorners(BufferedImage res, int x, int y){
         res.setRGB(5*x,5*y,Color.BLACK.getRGB());
         res.setRGB(5*x+4,5*y,Color.BLACK.getRGB());
@@ -57,8 +63,10 @@ public class MazeToBmp {
                 if (maze[x][y].isS()) setSWall(res, x, y);
                 if (maze[x][y].isE()) setEWall(res, x, y);
                 if (maze[x][y].isW()) setWWall(res, x, y);
+                setDotAtCenter(res,x,y);
             }
         }
+        res.setRGB((5*(length-1))+2 , (5*(width-1))+2,Color.BLACK.getRGB());
         return res;
     }
 

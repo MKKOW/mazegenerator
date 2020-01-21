@@ -64,7 +64,7 @@ public class Interface {
         }while (!choice.equals("q"));
     }
 
-    public void BacktrackerMenu() {
+    public void BacktrackerMenu() throws IOException {
         Scanner scan = new Scanner(System.in);
         int width,length,lvl;
         String name;
@@ -108,6 +108,9 @@ public class Interface {
 
         BT.generator(maze,0,0);
         new MazeToBmp(maze,name);
+        File tmp2 = new File(name + ".bmp");
+        BmpToMaze btm = new BmpToMaze(tmp2);
+        new MazeToBmp(btm.getMaze(),"abcd.bmp");
         scan.nextLine();
         /**Dalej modul odpowiedzialny za zapis uzywajac nazwy**/
 
@@ -193,6 +196,8 @@ public class Interface {
         /**Dalej modul odpowiedzialny za solver**/
         Solver solver=new Solver(tmp);
         Maze maze=solver.getSolvedMaze();
+        new MazeToBmp(maze,"solvtest");
+
     }
 
     public static void main(String[] args) throws IOException {

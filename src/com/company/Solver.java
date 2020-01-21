@@ -35,11 +35,11 @@ public class Solver {
         maze.getMaze()[start[0]][start[1]].setVisited(true);
         mazePath[start[0]][start[1]] = 0;
         stack.push(maze.getMaze()[start[0]][start[1]]);
-        while ((!stack.empty())&&stack.firstElement().getX() != end[0] && stack.firstElement().getY() != end[1]) {
+        while ((!stack.empty())) {
             tmp1 = stack.pop();
             x = tmp1.getX();
             y = tmp1.getY();
-            if (!tmp1.isN()&&y<maze.getLength()-1) {
+            if (!tmp1.isN()&&y<maze.getLength()) {
                 tmp2 = maze.getMaze()[x][y + 1];
                 if (!tmp2.isVisited()) {
                     mazePath[tmp2.getX()][tmp2.getY()] = mazePath[x][y] + 1;
@@ -55,7 +55,7 @@ public class Solver {
                     stack.push(tmp2);
                 }
             }
-            if (!tmp1.isE()&&x<maze.getWidth()-1) {
+            if (!tmp1.isE()&&x<maze.getWidth()) {
                 tmp2 = maze.getMaze()[x + 1][y];
                 if (!tmp2.isVisited()) {
                     mazePath[tmp2.getX()][tmp2.getY()] = mazePath[x][y] + 1;
@@ -75,8 +75,8 @@ public class Solver {
         maze.visitedReset();
         if(!stack.empty())
             tmp1 = stack.pop();
-        x = tmp1.getX();
-        y = tmp1.getY();
+        x = end[0];
+        y = end[1];
         int i = mazePath[x][y];
         maze.getMaze()[x][y].setVisited(true);
         while (i != 0) {
