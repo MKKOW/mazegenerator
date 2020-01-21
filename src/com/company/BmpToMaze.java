@@ -105,6 +105,7 @@ public class BmpToMaze {
     private Maze decodeBMPToMaze(BufferedImage bi) {
         int length = bi.getHeight() / 5;
         int width = bi.getWidth() / 5;
+        maze=new Maze(length,width,1,1,"unkown");
         maze.setLength(length);
         maze.setWidth(width);
         for (int y = 0; y < width; y++) {

@@ -28,7 +28,7 @@ public class Interface {
     }
 
 
-    public void Menu() {
+    public void Menu() throws IOException {
 
         Scanner scan = new Scanner(System.in);
         String choice = null;
@@ -92,13 +92,11 @@ public class Interface {
             System.out.println("Blad danych, podaj jeszcze raz; ");
             lvl = scan.nextInt();
         }
-        
-/*
+
         System.out.println("Podaj nazwe swojego labiryntu:  ");
         name = scan.nextLine();
-
+        name = scan.nextLine();
         File tmp = new File(name);
-*/
         /**Sprawdzam czy istnieje labirynt o podanej nazwie**//*
         while(tmp.exists()) {
             System.out.println("Taki labirynt juz istnieje, podaj nowa nazwe: ");
@@ -174,7 +172,7 @@ public class Interface {
 
     }
 
-    public void SolverMenu() {
+    public void SolverMenu() throws IOException {
 
         Scanner scan = new Scanner(System.in);
         String name;
@@ -187,15 +185,17 @@ public class Interface {
         clearConsole();
 
         /**Sprawdzam czy istnieje labirynt o podanej nazwie**/
-        while(!tmp.exists()) {
+        /*while(!tmp.exists()) {
             System.out.println("Taki labirynt nie istnieje, podaj nowa nazwe: ");
             name = scan.nextLine();
-        }
+        }*/
 
         /**Dalej modul odpowiedzialny za solver**/
+        Solver solver=new Solver(tmp);
+        Maze maze=solver.getSolvedMaze();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Interface inter = new Interface();
         inter.Menu();
