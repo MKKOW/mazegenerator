@@ -107,10 +107,10 @@ public class Interface {
         Maze maze = new Maze(length, width, lvl, 10 /**Narazie na stale**/, "Backtracker"); /** Trzeba rozkminic jak tutaj wrzucac seed**/
 
         BT.generator(maze,0,0);
-        new MazeToBmp(maze,name);
+        new MazeToBmp(maze,name,false);
         File tmp2 = new File(name + ".bmp");
         BmpToMaze btm = new BmpToMaze(tmp2);
-        new MazeToBmp(btm.getMaze(),"abcd.bmp");
+        new MazeToBmp(btm.getMaze(),"abcd.bmp",false);
         scan.nextLine();
         /**Dalej modul odpowiedzialny za zapis uzywajac nazwy**/
 
@@ -184,7 +184,7 @@ public class Interface {
         System.out.println("Podaj nazwe pliku z labiryntem: ");
         name = scan.nextLine();
 
-        File tmp = new File(name);
+        File tmp = new File(name + ".bmp");
         clearConsole();
 
         /**Sprawdzam czy istnieje labirynt o podanej nazwie**/
@@ -195,8 +195,8 @@ public class Interface {
 
         /**Dalej modul odpowiedzialny za solver**/
         Solver solver=new Solver(tmp);
-        Maze maze=solver.getSolvedMaze();
-        new MazeToBmp(maze,"solvtest");
+        Maze maze=solver.getSolvedMaze(); 
+        new MazeToBmp(maze,name + "_solved", true);
 
     }
 

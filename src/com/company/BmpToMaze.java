@@ -7,14 +7,14 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Klasa odpowiadająca za odczyt pliku bmp i generację labiryntu.
- * Plik powinien zawierać labirynt w odpowiednim formacie, takim samym jak przy generowaniu obrazka labiryntu. (Każda komórka w formacie 5px x 5px. Możliwe ścieżki muszą być białe, o szerokości 3 pikseli. Żaden róg żadnej komórki nie może być biały.)
+ * Class used to read BMP file and extract maze in solver-friendly form, based on MazeToBmp class.
+ * To succeed in this, image must show a maze in the same format as used in image generation (5px x 5px cells. Possible paths - white, 3px wide. Not a single cell corner can be white.)
  */
 public class BmpToMaze {
 
     /**
-     * Funkcja do odbierania odczytanego labiryntu.
-     * @return Odczytany labirynt.
+     * Created maze getter.
+     * @return generated maze.
      */
     public Maze getMaze() {
         return maze;
@@ -22,6 +22,13 @@ public class BmpToMaze {
 
     private Maze maze;
 
+    /**
+     * Checks if pixels corresponding to south wall in cell represent it.
+     * If there is at least one pixel white, sets cell's wall as nonexistent.
+     * @param res Image read from file.
+     * @param x first coordinate of a cell in maze
+     * @param y second coordinate of a cell in maze
+     */
     private void getSWall(BufferedImage res, int x, int y){
         if (    res.getRGB((5*x)+1, 5*y) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+2,5*y) == Color.WHITE.getRGB() &&
@@ -30,6 +37,13 @@ public class BmpToMaze {
         else
             maze.getMaze()[x][y].setS(true);
     }
+    /**
+     * Checks if pixels corresponding to north wall in cell represent it.
+     * If there is at least one pixel white, sets cell's wall as nonexistent.
+     * @param res Image read from file.
+     * @param x first coordinate of a cell in maze
+     * @param y second coordinate of a cell in maze
+     */
     private void getNWall(BufferedImage res, int x, int y){
         if (    res.getRGB((5*x)+1, (5*y)+4) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+2,(5*y)+4) == Color.WHITE.getRGB() &&
@@ -38,6 +52,13 @@ public class BmpToMaze {
         else
             maze.getMaze()[x][y].setN(true);
     }
+    /**
+     * Checks if pixels corresponding to east wall in cell represent it.
+     * If there is at least one pixel white, sets cell's wall as nonexistent.
+     * @param res Image read from file.
+     * @param x first coordinate of a cell in maze
+     * @param y second coordinate of a cell in maze
+     */
     private void getEWall(BufferedImage res, int x, int y){
         if (    res.getRGB((5*x)+4, (5*y)+1) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+4,(5*y)+2) == Color.WHITE.getRGB() &&
@@ -46,6 +67,13 @@ public class BmpToMaze {
         else
             maze.getMaze()[x][y].setE(true);
     }
+    /**
+     * Checks if pixels corresponding to west wall in cell represent it.
+     * If there is at least one pixel white, sets cell's wall as nonexistent.
+     * @param res Image read from file.
+     * @param x first coordinate of a cell in maze
+     * @param y second coordinate of a cell in maze
+     */
     private void getWWall(BufferedImage res, int x, int y){
         if (    res.getRGB(5*x, (5*y)+1) == Color.WHITE.getRGB() &&
                 res.getRGB(5*x,(5*y)+2) == Color.WHITE.getRGB() &&
@@ -56,13 +84,13 @@ public class BmpToMaze {
     }
 
     /**
-     * Metoda magiczna - w przypadku niewłaściwego formatu, wykorzystuje wymiary i funkcję skrótu obrazka do wygenerowania nowego labiryntu.
-     * @param bi Odczytany obrazek
+     * Magic method - if the format of an image is incorrect, takes dimensions of an image and its hash to generate a new maze.
+     * @param bi Read image.
      */
     private void magic(BufferedImage bi) {
-        System.out.println("Niewłaściwy format obrazka.");
-        System.out.println("Pora na magię!");
-        //magia
+        System.out.println("Incorrect image format.");
+        System.out.println("Magic time!");
+        //magic
         Backtracker BT = new Backtracker(bi.hashCode());
         Maze magicMaze = new Maze(bi.getHeight() / 5, bi.getWidth() / 5 , 3, bi.hashCode() , "Backtracker");
         BT.generator(magicMaze, 0, 0);
@@ -71,26 +99,23 @@ public class BmpToMaze {
 
 
     /**
-     * Sprawdza czy komórka ma odpowiednie rogi.
-     * @param bi Odczytywany obrazek
-     * @param x  Pierwsza współrzędna
-     * @param y  Druga współrzędna
-     * @return Fałsz jeśli co najmniej jeden róg jest biały.
+     * Checks whether cell's corners are
+     * @param bi Read image.
+     * @param x first coordinate of a cell in maze.
+     * @param y second coordinate of a cell in maze.
+     * @return False if at least one corner is white.
      */
     private boolean checkCorners(BufferedImage bi, int x, int y) {
-        if (bi.getRGB(5 * x, 5 * y) == Color.WHITE.getRGB() ||
-                bi.getRGB(5 * x + 4, 5 * y) == Color.WHITE.getRGB() ||
-                bi.getRGB(5 * x, 5 * y + 4) == Color.WHITE.getRGB() ||
-                bi.getRGB(5 * x + 4, 5 * y + 4) == Color.WHITE.getRGB())
-            return false;
-        else
-            return true;
+        return bi.getRGB(5 * x, 5 * y) != Color.WHITE.getRGB() &&
+                bi.getRGB(5 * x + 4, 5 * y) != Color.WHITE.getRGB() &&
+                bi.getRGB(5 * x, 5 * y + 4) != Color.WHITE.getRGB() &&
+                bi.getRGB(5 * x + 4, 5 * y + 4) != Color.WHITE.getRGB();
     }
 
     /**
-     * Konstruktor, odczytuje obrazek. Przy poprawnych wymiarach podejmuje próbę dekodowania, przy niepoprawnych - czaruje.
-     * @param file plik z obrazkiem
-     * @throws IOException przy błędzie odczytywania
+     * Constructor. Reads a file, if its format is correct, attempts to decode image, else - calls magic method.
+     * @param file image file.
+     * @throws IOException when failing during file read.
      */
     public BmpToMaze(File file) throws IOException {
         BufferedImage bi = ImageIO.read(file);
@@ -102,10 +127,15 @@ public class BmpToMaze {
         }
     }
 
+    /**
+     * Decodes BMP file to create a maze.
+     * @param bi Read image.
+     * @return Created maze.
+     */
     private Maze decodeBMPToMaze(BufferedImage bi) {
         int length = bi.getHeight() / 5;
         int width = bi.getWidth() / 5;
-        maze=new Maze(length,width,1,1,"unkown");
+        maze=new Maze(length,width,1,1,"unknown");
         maze.setLength(length);
         maze.setWidth(width);
         for (int y = 0; y < width; y++) {
