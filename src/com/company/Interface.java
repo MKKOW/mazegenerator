@@ -116,7 +116,7 @@ public class Interface {
 
     }
 
-    public void EllerMenu() {
+    public void EllerMenu() throws IOException {
 
         Scanner scan = new Scanner(System.in);
         int width,length,lvl;
@@ -155,6 +155,7 @@ public class Interface {
         clearConsole();
         System.out.println("Podaj nazwe swojego labiryntu:  ");
         name = scan.nextLine();
+        name = scan.nextLine();
         File tmp = new File(name);
 
         clearConsole();
@@ -169,7 +170,14 @@ public class Interface {
 
 
         /**Dalej modul odpowiedzialny za zapis i za generacje labiryntu**/
+        Eller EL = new Eller(123);
 
+        EL.generator(maze);
+        new MazeToBmp(maze,name,false);
+        File tmp2 = new File(name + ".bmp");
+        BmpToMaze btm = new BmpToMaze(tmp2);
+        new MazeToBmp(btm.getMaze(),"abcd.bmp",false);
+        scan.nextLine();
 
 
 

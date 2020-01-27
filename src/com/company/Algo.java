@@ -44,5 +44,7 @@ public class Algo {
 
         return num;
     }
-
+    public Random getRdm(){
+        return rdm;
+    }
 }
