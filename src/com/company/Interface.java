@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Interface {
@@ -66,7 +67,7 @@ public class Interface {
 
     public void BacktrackerMenu() throws IOException {
         Scanner scan = new Scanner(System.in);
-        int width,length,lvl;
+        int width,length;
         String name;
 
         clearConsole();
@@ -86,25 +87,15 @@ public class Interface {
         }
         clearConsole();
 
-        System.out.println("Podaj poziom trudnosci (1, 2 lub 3!!): ");
-        lvl = scan.nextInt();
-        while(lvl<1 || lvl>3) {
-            System.out.println("Blad danych, podaj jeszcze raz; ");
-            lvl = scan.nextInt();
-        }
-
         System.out.println("Podaj nazwe swojego labiryntu:  ");
         name = scan.nextLine();
         name = scan.nextLine();
         File tmp = new File(name);
-        /**Sprawdzam czy istnieje labirynt o podanej nazwie**//*
-        while(tmp.exists()) {
-            System.out.println("Taki labirynt juz istnieje, podaj nowa nazwe: ");
-            name = scan.nextLine();
-        }
-*/
-        Backtracker BT = new Backtracker(10);
-        Maze maze = new Maze(length, width, lvl, 10 /**Narazie na stale**/, "Backtracker"); /** Trzeba rozkminic jak tutaj wrzucac seed**/
+        /**Sprawdzam czy istnieje labirynt o podanej nazwie**/
+        Random seedGen = new Random();
+        int seed = seedGen.nextInt();
+        Backtracker BT = new Backtracker(seed);
+        Maze maze = new Maze(length, width, seed /**Narazie na stale**/, "Backtracker"); /** Trzeba rozkminic jak tutaj wrzucac seed**/
 
         BT.generator(maze,0,0);
         new MazeToBmp(maze,name,false);
@@ -143,16 +134,6 @@ public class Interface {
         }
         clearConsole();
 
-        System.out.println("Podaj poziom trudnosci (1, 2 lub 3!!): ");
-        lvl = scan.nextInt();
-
-        clearConsole();
-        while(lvl<1 || lvl>3) {
-            System.out.println("Blad danych, podaj jeszcze raz; ");
-            lvl = scan.nextInt();
-        }
-
-        clearConsole();
         System.out.println("Podaj nazwe swojego labiryntu:  ");
         name = scan.nextLine();
         name = scan.nextLine();
@@ -165,12 +146,13 @@ public class Interface {
             name = scan.nextLine();
         }
         clearConsole();
-
-        Maze maze = new Maze(length, width, lvl, 10, "Eller");
+        Random seedGen = new Random();
+        int seed = seedGen.nextInt();
+        Maze maze = new Maze(length, width, seed, "Eller");
 
 
         /**Dalej modul odpowiedzialny za zapis i za generacje labiryntu**/
-        Eller EL = new Eller(123);
+        Eller EL = new Eller(seed);
 
         EL.generator(maze);
         new MazeToBmp(maze,name,false);

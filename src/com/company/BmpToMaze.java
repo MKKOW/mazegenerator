@@ -29,7 +29,7 @@ public class BmpToMaze {
      * @param x first coordinate of a cell in maze
      * @param y second coordinate of a cell in maze
      */
-    private void getSWall(BufferedImage res, int x, int y){
+    private void getSWall(BufferedImage res, int y, int x){
         if (    res.getRGB((5*x)+1, 5*y) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+2,5*y) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+3,5*y) == Color.WHITE.getRGB() )
@@ -44,7 +44,7 @@ public class BmpToMaze {
      * @param x first coordinate of a cell in maze
      * @param y second coordinate of a cell in maze
      */
-    private void getNWall(BufferedImage res, int x, int y){
+    private void getNWall(BufferedImage res, int y, int x){
         if (    res.getRGB((5*x)+1, (5*y)+4) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+2,(5*y)+4) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+3,(5*y)+4) == Color.WHITE.getRGB() )
@@ -59,7 +59,7 @@ public class BmpToMaze {
      * @param x first coordinate of a cell in maze
      * @param y second coordinate of a cell in maze
      */
-    private void getEWall(BufferedImage res, int x, int y){
+    private void getEWall(BufferedImage res, int y, int x){
         if (    res.getRGB((5*x)+4, (5*y)+1) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+4,(5*y)+2) == Color.WHITE.getRGB() &&
                 res.getRGB((5*x)+4,(5*y)+3) == Color.WHITE.getRGB() )
@@ -74,7 +74,7 @@ public class BmpToMaze {
      * @param x first coordinate of a cell in maze
      * @param y second coordinate of a cell in maze
      */
-    private void getWWall(BufferedImage res, int x, int y){
+    private void getWWall(BufferedImage res, int y, int x){
         if (    res.getRGB(5*x, (5*y)+1) == Color.WHITE.getRGB() &&
                 res.getRGB(5*x,(5*y)+2) == Color.WHITE.getRGB() &&
                 res.getRGB(5*x,(5*y)+3) == Color.WHITE.getRGB() )
@@ -92,7 +92,7 @@ public class BmpToMaze {
         System.out.println("Magic time!");
         //magic
         Backtracker BT = new Backtracker(bi.hashCode());
-        Maze magicMaze = new Maze(bi.getHeight() / 5, bi.getWidth() / 5 , 3, bi.hashCode() , "Backtracker");
+        Maze magicMaze = new Maze(bi.getHeight() / 5, bi.getWidth() / 5 , bi.hashCode() , "Backtracker");
         BT.generator(magicMaze, 0, 0);
         this.maze = magicMaze;
     }
@@ -105,7 +105,7 @@ public class BmpToMaze {
      * @param y second coordinate of a cell in maze.
      * @return False if at least one corner is white.
      */
-    private boolean checkCorners(BufferedImage bi, int x, int y) {
+    private boolean checkCorners(BufferedImage bi, int y, int x) {
         return bi.getRGB(5 * x, 5 * y) != Color.WHITE.getRGB() &&
                 bi.getRGB(5 * x + 4, 5 * y) != Color.WHITE.getRGB() &&
                 bi.getRGB(5 * x, 5 * y + 4) != Color.WHITE.getRGB() &&
@@ -135,7 +135,7 @@ public class BmpToMaze {
     private Maze decodeBMPToMaze(BufferedImage bi) {
         int length = bi.getHeight() / 5;
         int width = bi.getWidth() / 5;
-        maze=new Maze(length,width,1,1,"unknown");
+        maze=new Maze(length,width,1,"unknown");
         maze.setLength(length);
         maze.setWidth(width);
         for (int y = 0; y < width; y++) {

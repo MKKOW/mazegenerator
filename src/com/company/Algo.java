@@ -22,20 +22,8 @@ public class Algo {
     }
 
     /**Do dopisania**/
-    public Cell Finish(Maze maze, int lvl, int x, int y){ /**Dajemy mu miejsce startu, labirynt i poziom a on generuje finish**/
+    public Cell Finish(Maze maze, int x, int y){ /**Dajemy mu miejsce startu, labirynt i poziom a on generuje finish**/
         Cell finish = new Cell();
-
-        switch(lvl) {
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-        }
 
         return finish;
     }

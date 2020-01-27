@@ -2,15 +2,15 @@ package com.company;
 
 public class Maze {
 
-    private int length, width, level;
+    private int length, width;
     private long seed;
     private Cell [][] maze;
     private String algorithm;
 
-    public Maze(int length, int width, int level, long seed, String algorithm) {
+    public Maze(int length, int width, long seed, String algorithm) {
         this.length = length;
         this.width = width;
-        this.level = level;
+
         this.seed = seed;
         this.algorithm = algorithm;
         this.maze = new Cell[width][length];
@@ -38,14 +38,6 @@ public class Maze {
 
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public long getSeed() {
