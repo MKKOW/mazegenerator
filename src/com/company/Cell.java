@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Cell {
     private boolean visited;
     private int x,y;
@@ -67,5 +69,24 @@ public class Cell {
 
     public void setS(boolean down) {
         this.S = down;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return visited == cell.visited &&
+                x == cell.x &&
+                y == cell.y &&
+                N == cell.N &&
+                S == cell.S &&
+                E == cell.E &&
+                W == cell.W;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(visited, x, y, N, S, E, W);
     }
 }
